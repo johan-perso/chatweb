@@ -68,7 +68,7 @@ function parseMarkdown(md){
 // Fonction pour poser une question à Anti Coupable
 async function askQuestion(question){
 	// Vérifier si la question est donné
-	if(question.length === 0) return document.getElementById("errorMessage").innerText = 'Veuillez entrer une question.'
+	if(question?.toString()?.replace(/ /g,'')?.length === 0) return document.getElementById("errorMessage").innerText = 'Veuillez entrer une question.'
 
 	// Masquer la réponse précédente
 	document.getElementById("answerDiv").classList.add("hidden")
@@ -127,8 +127,8 @@ async function askQuestion(question){
 // Fonction pour définir une réponse à une question à Anti Coupable
 async function setAnswer(question, answer){
 	// Vérifier si la question est donné
-	if(question.length === 0) return document.getElementById("errorMessage").innerText = 'Veuillez entrer une question.'
-	if(answer.length === 0) return document.getElementById("errorMessage").innerText = 'Veuillez entrer une réponse : elle sera utilisé par Anti Coupable.'
+	if(question?.toString()?.replace(/ /g,'')?.length === 0) return document.getElementById("errorMessage").innerText = 'Veuillez entrer une question.'
+	if(answer?.toString()?.replace(/ /g,'')?.length === 0) return document.getElementById("errorMessage").innerText = 'Veuillez entrer une réponse : elle sera utilisé par Anti Coupable.'
 
 	// Masquer la réponse précédente
 	document.getElementById("answerDiv").classList.add("hidden")
