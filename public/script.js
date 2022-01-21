@@ -1,6 +1,32 @@
-// Quand la page a fini de charger, mettre le focus sur l'input
-window.onload = function () {
+// Quand la page a fini de charger
+window.onload = async function (){
+	// Mettre le focus sur l'input
 	document.getElementById("input_question").focus()
+
+	// Si il y a un paramètre dans l'URL, le vérifier
+	if(new URLSearchParams(window.location.search).get('message')){
+		// Afficher un toast
+		document.body.insertAdjacentHTML('beforeend', `<div id="toast-loading_from_params" class="animate__animated animate__fadeIn animate__fast absolute top-2 right-2 flex items-center w-full p-4 rounded-lg shadow text-gray-400 bg-gray-800" style="max-width: 21.5rem;" role="alert"><div id="toastBG-loading_from_params" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg bg-blue-800 text-blue-200"><i id="toastIcon-loading_from_params" class="fas fa-info"></i></div><div id="toastText-loading_from_params" class="ml-3 text-sm font-normal">Obtention du message à partir de l'URL...</div></div>`);
+
+		// Afficher la réponse au message
+		await askQuestion(new URLSearchParams(window.location.search).get('message'))
+
+		// Modifier l'input pour ajouter le message
+		document.getElementById('input_question').value = new URLSearchParams(window.location.search).get('message')
+
+		// Modifier l'icône et le texte du toast
+		document.getElementById('toastIcon-loading_from_params').classList.replace('fa-info', 'fa-check');
+		document.getElementById('toastBG-loading_from_params').classList.replace('bg-blue-800', 'bg-green-500');
+		document.getElementById('toastText-loading_from_params').innerText = "Obtention du message à partir de l'URL"
+
+		// Enlever le toast au bout de quelques instants
+		setTimeout(() => {
+			document.getElementById('toast-loading_from_params').classList.replace('animate__fadeIn', 'animate__fadeOut');
+			setTimeout(() => {
+				document.getElementById('toast-loading_from_params').remove();
+			}, 500);
+		}, 2600);
+	}
 }
 
 // Fonction pour obtenir le chemin de la page
@@ -98,7 +124,6 @@ async function askQuestion(question){
 		.replace(/{date_MM}/g, new Intl.DateTimeFormat('fr', { month: 'long' }).format(new Date()))
 		.replace(/{date_mm}/g, new Date().getMonth() + 1)
 		.replace(/{date_YYYY}/g, new Date().getFullYear())
-		.replace(/{username}/g, 'toi')
 		.replace(/</g, '&lt;')
 		.replace(/>/g, '&gt;')
 	)
