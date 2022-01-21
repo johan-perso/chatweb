@@ -1,6 +1,6 @@
 {
   "name": "chatweb",
-  "version": "1.0",
+  "version": "1.2",
   "description": "Le chat d'Anti Coupable, via navigateur.",
   "main": "index.js",
   "scripts": {
