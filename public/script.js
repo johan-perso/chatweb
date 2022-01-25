@@ -108,9 +108,7 @@ onkeydown = function(e){
 // Fonction pour parse du markdown (codepen.io/kvendrik/pen/Gmefv)
 function parseMarkdown(md){
 	// Citation
-	md = md.replace(/^\>(.+)/gm, '<cite>$1</cite>');
-	md = md.replace(/^&gt;(.+)/gm, '<cite>$1</cite>');
-	md = md.replace(/^&lt;(.+)/gm, '<cite>$1</cite>');
+	md = md.replace(/^&gt; (.+)/gm, '<blockquote class="border-l-4 border-gray-400 px-2 py-1">$1</blockquote>');
 
 	// Style d'écriture (gras, italique)
 	md = md.replace(/[\*]{2}([^\*]+)[\*]{2}/g, '<b>$1</b>');
