@@ -1,6 +1,6 @@
 {
   "name": "chatweb",
-  "version": "1.2",
+  "version": "1.4",
   "description": "Le chat d'Anti Coupable, via navigateur.",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,9 @@
   "license": "MIT",
   "homepage": "https://chatweb.johanstickman.com",
   "dependencies": {
-    "express": "^4.17.1"
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1"
   },
   "repository": {
     "type": "git",
