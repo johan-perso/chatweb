@@ -1,5 +1,26 @@
 // Quand la page a fini de charger
 window.onload = async function (){
+	// Modifier le thème par rapport au stockage local
+	if(getCookie('theme') !== null) document.documentElement.setAttribute('data-theme', getCookie('theme'))
+
+	// Si le thème est celui par défaut, modifier par rapport à la date
+	if(getCookie('theme') === null){
+		// Le jour d'halloween
+		if(new Date().getMonth() == 9 && new Date().getDate() == 31){
+			document.documentElement.setAttribute('data-theme', 'halloween')
+		}
+
+		// Le jour de la saint valentin
+		if(new Date().getMonth() == 1 && new Date().getDate() == 14){
+			document.documentElement.setAttribute('data-theme', 'valentine')
+		}
+
+		// Le 1er avril
+		if(new Date().getMonth() == 3 && new Date().getDate() == 1){
+			document.documentElement.setAttribute('data-theme', 'aqua')
+		}
+	}
+
 	// Mettre le focus sur l'input
 	document.getElementById("input_question").focus()
 
@@ -33,6 +54,32 @@ window.onload = async function (){
 function getPath(){
 	return (window.location.pathname.replace(/\//g,"").replace(/#/g,"") === "") ? "index" : window.location.pathname.replace(/\//g,"").replace(/#/g,"")
 }
+
+// Fonction pour changer de thème
+function changeTheme(themeName){
+	// Si le thème est déjà choisi, annuler
+	if(themeName === document.documentElement.getAttribute('data-theme')) return;
+
+	// Mettre une animation
+	document.documentElement.classList.add('animate__animated','animate__fadeOut','animate__faster')
+
+	// Modifier le thème (stockage local)
+	if(themeName !== "default") setCookie('theme', themeName);
+	if(themeName === "default") setCookie('theme', '', -1)
+
+	// Au bout de 700 ms, modifier le thème (visuellement)
+	setTimeout(() => {
+		if(themeName !== "default") document.documentElement.setAttribute('data-theme', themeName)
+		if(themeName === "default") document.documentElement.setAttribute('data-theme','')
+	}, 700)
+
+	// Au bout de 1250 ms, enlever l'animation (et donc réafficher la page)
+	setTimeout(() => {
+		document.documentElement.classList.remove('animate__animated','animate__fadeOut','animate__faster')
+		document.documentElement.classList.add('animate__animated','animate__fadeIn','animate__faster')
+	}, 1250)
+}
+
 
 // Raccourcis clavier
 onkeydown = function(e){
@@ -187,4 +234,49 @@ async function setAnswer(question, answer){
 
 	// Mettre le focus sur l'input
 	document.getElementById("input_question").focus()
+}
+
+// Konami code pour avoir un... thème
+new Konami(() => {
+	// Demander une confirmation
+	var confirm = window.confirm("Voulez-vous activer le mode \"thème aléatoire\" (changement de thème toutes les secondes) ?");
+	if(!confirm) return;
+
+	// Préparer une liste avec tout les thèmes
+	var allThemes = ['light','dark','cupcake','emerald','synthwave','retro','valentine','halloween','aqua','bumblebee','garden','forest']
+
+	// Fonction pour afficher tout les thèmes
+	function showThemes(){
+		allThemes.forEach((theme,i) => {
+			setTimeout(() => { document.documentElement.setAttribute('data-theme', allThemes[Math.floor(Math.random() * allThemes.length)]) }, i * 1000)
+		})
+	}; showThemes();
+
+	// Changer de thèmes en boucle
+	setInterval(() => {
+		showThemes()
+	}, allThemes.length * 1000)
+});
+
+// Fonction pour définir un cookie
+function setCookie(name, value, days=999){
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + ";";
+}
+
+// Fonction pour obtenir un cookie
+function getCookie(name){
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++){
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
 }
