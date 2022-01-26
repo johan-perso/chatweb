@@ -155,9 +155,8 @@ async function askQuestion(question){
 	// Faire une requête pour obtenir la réponse à la question
 	var answer = await fetch('https://anticoupable.johanstickman.com/api/ac-chat', { method: 'POST', body: new URLSearchParams({ message: question }) }).then(res => res.json())
 
-	// Afficher la réponse
-	if(!answer.error) document.getElementById("answerDiv").classList.remove("hidden")
-	if(!answer.error) document.getElementById("answerText").innerHTML = parseMarkdown(answer?.response?.toString()
+	// Modifier certains éléments du message (placeholder et markdown vers HTML);
+	answer.message = parseMarkdown(answer?.response?.toString()
 		.replace(/{username}/g, 'toi')
 		.replace(/#{discriminator}/g, '')
 		.replace(/{discriminator}/g, '')
@@ -172,6 +171,16 @@ async function askQuestion(question){
 		.replace(/</g, '&lt;')
 		.replace(/>/g, '&gt;')
 	)
+
+	// Si la réponse est trop longue, la couper
+	if(answer.message.length > 500) answer.message = `${answer.message.substring(0, 500)}...<br><a id="showCompleteAnswerButton" href="javascript:void(0)" class="text-center font-semibold text-blue-400">Afficher plus</a>`
+
+	// Afficher la réponse
+	if(!answer.error) document.getElementById("answerDiv").classList.remove("hidden")
+	if(!answer.error) document.getElementById("answerText").innerHTML = answer.message
+
+	// Rendre le texte "Afficher plus" cliquable
+	if(document.getElementById("showCompleteAnswerButton")) document.getElementById("showCompleteAnswerButton").setAttribute('onclick', `showCompleteAnswer('${answer?.response?.toString().replace(/'/g,'&apos;').replace(/"/g,'&quot;').replace(/\(/g,'&lpar;').replace(/\)/g,'&rpar;').replace(/>/g,'&gt;')}')`)
 
 	// Enlever le logo de chargement
 	document.getElementById('askButton_icon_send').style.display = 'block'
@@ -191,6 +200,25 @@ async function askQuestion(question){
 		// Ajouter le focus sur l'autre input
 		document.getElementById("input_answer").focus()
 	}
+}
+
+// Fonction pour afficher une réponse complète
+function showCompleteAnswer(answerText){
+	return document.getElementById("answerText").innerHTML = parseMarkdown(answerText?.toString()
+		.replace(/{username}/g, 'toi')
+		.replace(/#{discriminator}/g, '')
+		.replace(/{discriminator}/g, '')
+		.replace(/{time_HH}/g, new Date().getHours())
+		.replace(/{time_mm}/g, new Date().getMinutes())
+		.replace(/{time_ss}/g, new Date().getSeconds())
+		.replace(/{date_dd}/g, new Intl.DateTimeFormat('fr', { weekday: 'long' }).format(new Date()))
+		.replace(/{date_DD}/g, new Date().getDate())
+		.replace(/{date_MM}/g, new Intl.DateTimeFormat('fr', { month: 'long' }).format(new Date()))
+		.replace(/{date_mm}/g, new Date().getMonth() + 1)
+		.replace(/{date_YYYY}/g, new Date().getFullYear())
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+	)
 }
 
 
