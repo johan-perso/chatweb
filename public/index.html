@@ -21,14 +21,13 @@
 	<meta property="og:title" content="ChatWeb">
 	<meta property="og:description" content="Le chat d'Anti Coupable, via navigateur.">
 </head>
-<body class="h-screen items-center flex flex-col justify-center">
+<body class="grid place-items-center p-4" style="height: 92vh;">
 	<noscript>
 		<div class="min-w-screen h-screen animated fadeIn faster fixed left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover"><div class="absolute bg-black opacity-80 inset-0 z-0"></div><div class="w-full max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg bg-gray-800"><div class="text-center p-5 flex-auto justify-center"><span class="text-yellow-400" style="font-size: 4.42em;"><i class="fas fa-exclamation-circle"></i></span><h2 class="text-2xl font-bold py-4 text-indigo-500">Oupsi...</h3><p class="text-sm text-gray-400 px-8">Votre navigateur ne semble pas avoir JavaScript d'activé. Veuillez l'activer puis réessayer...</p></div></div></div>
 	</noscript>
 
 	<div class="absolute right-2 top-1 dropdown dropdown-end">
 		<div tabindex="0" class="m-1 btn">Thème</div>
-
 		<ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box" style="width: 11.25rem;">
 			<li>
 				<a theme-name="default" onclick="changeTheme(this.getAttribute('theme-name'))">🗑️ Par défaut</a>
@@ -82,12 +81,12 @@
 		<div id="answerDiv" class="max-w-md lg:max-w-lg hidden rounded-lg mt-4 bg-neutral">
 			<div class="px-3 py-1 text-left">
 				<h1 class="text-neutral-content font-bold text-center">Anti Coupable :</h1>
-				<p class="text-neutral-content" id="answerText"></p>
+				<p class="text-neutral-content break-all" id="answerText"></p>
 			</div>
 		</div>
 	</div>
 
-	<div class="absolute md:left-2 bottom-1 text-center flex md:block">
+	<div class="fixed md:left-2 bottom-1 text-center flex md:block">
 		<a href="https://johanstickman.com"><p class="text-sm opacity-20">© Johan le stickman</p></a>
 		<p class="text-sm opacity-20"><span class="md:hidden">&nbsp;|&nbsp;</span>Version <span class="text-bold">{chatweb_version_number}</span></p>
 	</div>
