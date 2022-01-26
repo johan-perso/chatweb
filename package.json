@@ -1,6 +1,6 @@
 {
   "name": "chatweb",
-  "version": "1.4",
+  "version": "1.4.2",
   "description": "Le chat d'Anti Coupable, via navigateur.",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   "dependencies": {
     "cookie-parser": "^1.4.6",
     "express": "^4.17.1",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.7"
   },
   "repository": {
     "type": "git",
