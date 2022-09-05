@@ -153,7 +153,7 @@ async function askQuestion(question){
 	document.getElementById('askButton_icon_loading').style.display = 'block'
 
 	// Faire une requête pour obtenir la réponse à la question
-	var answer = await fetch('https://anticoupable.johanstickman.com/api/ac-chat', { method: 'POST', body: new URLSearchParams({ message: question }) }).then(res => res.json())
+	var answer = await fetch('https://anticoupable.johanstick.me/api/ac-chat', { method: 'POST', body: new URLSearchParams({ message: question }) }).then(res => res.json())
 
 	// Modifier certains éléments du message (placeholder et markdown vers HTML);
 	answer.message = parseMarkdown(answer?.response?.toString()
@@ -240,7 +240,7 @@ async function setAnswer(question, answer){
 	document.getElementById('answerButton_icon_loading').style.display = 'block'
 
 	// Faire une requête pour obtenir la réponse à la question
-	var setResponse = await fetch('https://anticoupable.johanstickman.com/api/set-ac-chat', { method: 'POST', body: new URLSearchParams({ question: question, answer: answer }) }).then(res => res.json())
+	var setResponse = await fetch('https://anticoupable.johanstick.me/api/set-ac-chat', { method: 'POST', body: new URLSearchParams({ question: question, answer: answer }) }).then(res => res.json())
 
 	// Afficher la réponse
 	if(!setResponse.error) document.getElementById("answerDiv").classList.remove("hidden")
