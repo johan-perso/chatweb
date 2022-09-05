@@ -7,14 +7,12 @@ const fetch = require('node-fetch');
 const express = require('express');
 const app = express();
 app.disable('x-powered-by');
-var cookieParser = require('cookie-parser');
-app.use(cookieParser());
 
 // Vérifier si la plateforme est censé être down
 isDown = false;
 async function checkDown(){
 	// Fetch pour obtenir la liste des maintenances
-	var listDown = await fetch(`https://johanstickman.com/api/listDown?from=chatweb`).then(res => res.json()).catch(err => { return "retry" })
+	var listDown = await fetch(`https://johanstick.me/api/listDown?from=chatweb`).then(res => res.json()).catch(err => { return "retry" })
 	if(listDown === "retry") return setTimeout(() => checkDown(), 5000);
 
 	// Obtenir le statut de ce service
@@ -39,7 +37,7 @@ function editPage(pageCode){
 
 // Route - page d'accueil
 app.get('/', async (req, res) => {
-	if(isDown === true) return res.status('503').send(editPage(fs.readFileSync(path.join(__dirname, 'public', 'down.html')).toString()).replace('{colorTheme}',req?.cookies?.theme))
+	if(isDown === true) return res.status('503').redirect('https://johanstick.me/maintenance')
 	res.send(editPage(fs.readFileSync(path.join(__dirname, 'public', 'index.html')).toString()).replace('{colorTheme}',req?.cookies?.theme))
 })
 
@@ -51,7 +49,7 @@ app.get('/script.js', async (req, res) => {
 
 // Routes - erreur 404
 app.get('*', async (req, res) => {
-	if(isDown === true) return res.status('503').send(editPage(fs.readFileSync(path.join(__dirname, 'public', 'down.html')).toString()).replace('{colorTheme}',req?.cookies?.theme))
+	if(isDown === true) return res.status('503').redirect('https://johanstick.me/maintenance')
 	res.send(editPage(fs.readFileSync(path.join(__dirname, 'public', '404.html')).toString()).replace('{colorTheme}',req?.cookies?.theme))
 })
 app.post('*', async (req, res) => {
