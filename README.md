@@ -1,17 +1,17 @@
 # ChatWeb
 
-La commande chat d'[Anti Coupable](https://anticoupable.johanstick.me), via navigateur.
+La commande chat d'[Anti Coupable](https://anticoupable.johanstick.fr), via navigateur.
 
 
 ## Tester le site
 
-Vous pouvez accéder au site hebergé sur Vercel à [chatweb.johanstick.me](https://chatweb.johanstick.me).
+Le site n'est plus disponible. L'api non plus.
 
 
 ## Fonctionnement
 
 Vous entrez un message sur le site, ensuite :
-- Votre message sera envoyé à l'API d'Anti coupable (anticoupable.johanstick.me/api/ac-chat)
+- Votre message sera envoyé à l'API d'Anti coupable (anticoupable.johanstick.fr/api/ac-chat)
 - L'API vérifiera si elle a la réponse à votre message :
   - Si elle a la réponse : elle vous la donnera
   - Sinon, vous aurez la possibilité d'ajouter votre réponse
